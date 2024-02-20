@@ -33,8 +33,8 @@ set_debug(True)
 ##### LLM #####
 
 #initialize llm
-llm = ChatOpenAI(temperature=0, api_key=os.getenv("OPENAI_API_KEY")) # switch to whatever llm you'd like
-# llm = ChatOllama(model = "mistral:latest", temperature=0.05) # switch to whatever llm you'd like
+# llm = ChatOpenAI(temperature=0, api_key=os.getenv("OPENAI_API_KEY")) # switch to whatever llm you'd like
+llm = ChatOllama(model = "mistral:latest", temperature=0.05) # switch to whatever llm you'd like
 
 ##### SQL Database #####
 
@@ -86,7 +86,7 @@ prompt_template = ChatPromptTemplate.from_template(
     Use the following format:
 
     Question: the input question you must answer
-    Thought: you should always think about what to do
+    Thought: your thought process of what action should be taken
     Action: the action to take, should be one of [{tool_names}]
     Action Input: the input to the action
     Observation: the result of the action
@@ -106,8 +106,7 @@ prompt_template = ChatPromptTemplate.from_template(
     Begin!
 
     Question: {input} 
-    Thought: {agent_scratchpad}
-    Action:"""
+    Thought: {agent_scratchpad}"""
 )
 
 # create zero shot agent (react agent)
@@ -173,7 +172,7 @@ if user_input := st.chat_input("Question", key="input"):
     with st.spinner("⚡️ Thinking..."):
         # invoke chain with necessary input variables
         response = agent_chain.invoke({"input": user_input, 
-                                        "agent_scratchpad": st.session_state.agent_scratchpad, 
+                                        "agent_scratchpad": "", 
                                         "chat_history": st.session_state.messages})
 
         print(response)
