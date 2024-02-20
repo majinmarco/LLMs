@@ -12,7 +12,7 @@ from langchain_experimental.tools import PythonREPLTool # python interface to be
 from langchain.memory import ConversationBufferMemory # chat memory for agentfrom langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.tools.render import render_text_description
 from langchain.prompts import ChatPromptTemplate
-from langchain.globals import set_verbose
+from langchain.globals import set_verbose, set_debug
 
 
 
@@ -26,12 +26,15 @@ import streamlit as st
 # load environment variables
 load_dotenv()
 
-# set langchain to verbose
+# set langchain to verbose, debug true
 set_verbose(True)
+set_debug(True)
+
+##### LLM #####
 
 #initialize llm
-# llm = ChatOpenAI(temperature=0, api_key=os.getenv("OPENAI_API_KEY")) # switch to whatever llm you'd like
-llm = ChatOllama(model = "mistral:latest", temperature=0.05) # switch to whatever llm you'd like
+llm = ChatOpenAI(temperature=0, api_key=os.getenv("OPENAI_API_KEY")) # switch to whatever llm you'd like
+# llm = ChatOllama(model = "mistral:latest", temperature=0.05) # switch to whatever llm you'd like
 
 ##### SQL Database #####
 
@@ -98,7 +101,7 @@ prompt_template = ChatPromptTemplate.from_template(
     - Action Input:
     because they are part of the thinking process instead of the output.
 
-    If there is no need to answer the question, or it is irrelevant to your job, please make your final answersomething similar to: "Please ask a relevant query."
+    If there is no need to answer the question, or it is irrelevant to your job, please make your final answer something similar to: "Please ask a relevant query."
     
     Begin!
 
