@@ -327,5 +327,8 @@ if user_input := st.chat_input("Question", key="input"):
             # Render the plot
             df = st.session_state["df"]
 
-            # get plot image and display it
-            st.image(execute_and_display_figure(response["plot"], st.session_state["path"]))
+            try:
+                # get plot image and display it
+                st.image(execute_and_display_figure(response["plot"], st.session_state["path"]))
+            except:
+                st.write("No plot generated.")
